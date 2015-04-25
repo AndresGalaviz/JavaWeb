@@ -15,6 +15,10 @@
     <center>
         <h1>Menú</h1>
         <p>Bienvenido, <%= (String)session.getAttribute("usuario") %>!</p>
+        <a href="Controlador?action=materias">Crear/editar materias</a><br>
+        <a href="Controlador?action=categorias">Crear/editar categorías</a><br>
+        <a href="Controlador?action=categorias">Crear/editar preguntas</a><br>
+        <a href="Controlador?action=juego">Iniciar juego</a><br>
         
     </center>
     </body>

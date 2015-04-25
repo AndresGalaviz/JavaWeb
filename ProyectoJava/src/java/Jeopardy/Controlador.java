@@ -7,6 +7,7 @@ package Jeopardy;
  */
 
 import java.io.IOException;
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -33,18 +34,17 @@ public class Controlador extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         
         String action = request.getParameter("action");
-        String url = "";
-        if(action.equals("login")) {
+        System.out.println(action);
+        String url = "/";
+        if (action.equals("login")) {
             String user = request.getParameter("user");
             String password = request.getParameter("password");
-            System.out.println(user);
-            if (DBhandler.validUser(user, password)) {
+            int id = DBhandler.validarUsuario(user, password);
+            if (id != -1) {
                 url = "/menu.jsp";
-                request.getSession().setAttribute("user", user);
+                request.getSession().setAttribute("idPerfil", id);
                 request.getSession().removeAttribute("message");
-                System.out.println("Mensaje");
             } else {
-                System.out.println(":(");
                 url = "/login.jsp";
                 Integer wrongPassword = 1;
                 String mensaje;
@@ -59,6 +59,22 @@ public class Controlador extends HttpServlet {
                 request.getSession().setAttribute("message", mensaje);
                 request.getSession().setAttribute("wrongPassword", wrongPassword);
             }
+        } else if (action.equals("materias")) {
+            int idPerfil = (int)request.getSession().getAttribute("idPerfil");
+            List<Materia> materias = DBhandler.getMaterias(idPerfil);
+            request.setAttribute("materias", materias);
+            url = "/materias.jsp";
+        } else if (action.equals("editarMateria")) {
+            if (request.getAttribute("id") == null) {
+                System.out.println("no id");
+            }
+            int id = (int)request.getAttribute("id");
+            String elemento = (String)request.getAttribute("element");
+            String valor = (String)request.getAttribute("valor");
+            DBhandler.editarTabla("materias", id, elemento, valor);
+        } else if (action.equals("borrarMateria")) {
+            int id = (int)request.getAttribute("id");
+            DBhandler.borrarElemento("materias", id);
         }
         
         

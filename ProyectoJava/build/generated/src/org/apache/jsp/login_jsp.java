@@ -41,24 +41,24 @@ public final class login_jsp extends org.apache.jasper.runtime.HttpJspBase
       _jspx_out = out;
       _jspx_resourceInjector = (org.glassfish.jsp.api.ResourceInjector) application.getAttribute("com.sun.appserv.jsp.resource.injector");
 
-      out.write("\n");
-      out.write("\n");
-      out.write("\n");
+      out.write("\r\n");
+      out.write("\r\n");
+      out.write("\r\n");
 
-    String mensaje = (String) session.getAttribute("mensaje");
-    if (mensaje == null) {
-        mensaje = "";
+    String message = (String) session.getAttribute("message");
+    if (message == null) {
+        message = "";
     }
-    session.removeAttribute("mensaje");
+    session.removeAttribute("message");
 
-      out.write("\n");
-      out.write("<!DOCTYPE html>\n");
-      out.write("<html>\n");
-      out.write("    <head>\n");
-      out.write("        <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n");
-      out.write("        <title>Login</title>\n");
-      out.write("    </head>\n");
-      out.write("    <body>\n");
+      out.write("\r\n");
+      out.write("<!DOCTYPE html>\r\n");
+      out.write("<html>\r\n");
+      out.write("    <head>\r\n");
+      out.write("        <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\r\n");
+      out.write("        <title>Login</title>\r\n");
+      out.write("    </head>\r\n");
+      out.write("    <body>\r\n");
       out.write("        ");
       Jeopardy.DBhandler datos = null;
       synchronized (session) {
@@ -68,25 +68,25 @@ public final class login_jsp extends org.apache.jasper.runtime.HttpJspBase
           _jspx_page_context.setAttribute("datos", datos, PageContext.SESSION_SCOPE);
         }
       }
-      out.write("\n");
-      out.write("    <center>\n");
-      out.write("        <h1>Login</h1>\n");
-      out.write("        <h2>Ingresa tus datos:</h2>\n");
+      out.write("\r\n");
+      out.write("    <center>\r\n");
+      out.write("        <h1>Login</h1>\r\n");
+      out.write("        <h2>Ingresa tus datos:</h2>\r\n");
       out.write("        <p style=\"color:blue\">");
-      out.print( mensaje);
-      out.write("</p>\n");
-      out.write("        <form action=\"Controlador?action=login\" method=\"POST\">\n");
-      out.write("            Usuario: <input type=\"text\" name=\"user\" required=\"true\">\n");
-      out.write("            <br><br>       \n");
-      out.write("            Contraseña: <input type=\"password\" name=\"password\" required=\"true\">\n");
-      out.write("            <br>\n");
-      out.write("            <br>\n");
-      out.write("            <input type=\"submit\" value =\"Submit\">\n");
-      out.write("            <input type=\"reset\" value=\"Reset\">\n");
-      out.write("        </form>\n");
-      out.write("    </center>\n");
-      out.write("    </body>\n");
-      out.write("</html>\n");
+      out.print( message);
+      out.write("</p>\r\n");
+      out.write("        <form action=\"Controlador?action=login\" method=\"POST\">\r\n");
+      out.write("            Usuario: <input type=\"text\" name=\"user\" required=\"true\">\r\n");
+      out.write("            <br><br>       \r\n");
+      out.write("            Contraseña: <input type=\"password\" name=\"password\" required=\"true\">\r\n");
+      out.write("            <br>\r\n");
+      out.write("            <br>\r\n");
+      out.write("            <input type=\"submit\" value =\"Submit\">\r\n");
+      out.write("            <input type=\"reset\" value=\"Reset\">\r\n");
+      out.write("        </form>\r\n");
+      out.write("    </center>\r\n");
+      out.write("    </body>\r\n");
+      out.write("</html>\r\n");
     } catch (Throwable t) {
       if (!(t instanceof SkipPageException)){
         out = _jspx_out;

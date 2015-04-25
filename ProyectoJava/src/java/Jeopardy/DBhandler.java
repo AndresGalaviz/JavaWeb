@@ -30,14 +30,17 @@ public class DBhandler {
     }
 
     
-    public static boolean validUser(String user, String password) {
+    public static boolean validUser(String usuario, String pw) {
         boolean valido = false;
+        System.out.println("entrando a funcion");
         try {            
             //if (connection == null) {return false;}
             
             Statement statement = connection.createStatement();
-            ResultSet results = statement.executeQuery("select * from perfiles where usuario = '" 
-                                                        + user + "' and password = '" + password + "'");
+            String query = "select * from perfiles where usuario = '" 
+                    + usuario + "' and password = '" + pw + "'";
+            ResultSet results = statement.executeQuery(query);
+            System.out.println(query);
             while (results.next()) {
                 valido = true;
             }

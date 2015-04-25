@@ -37,6 +37,7 @@ public class Controlador extends HttpServlet {
         if(action.equals("login")) {
             String user = request.getParameter("user");
             String password = request.getParameter("password");
+            System.out.println(user);
             if (DBhandler.validUser(user, password)) {
                 url = "/menu.jsp";
                 request.getSession().setAttribute("user", user);

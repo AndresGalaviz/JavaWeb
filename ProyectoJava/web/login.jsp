@@ -26,9 +26,9 @@
         <h2>Ingresa tus datos:</h2>
         <p style="color:blue"><%= mensaje%></p>
         <form action="Controlador?action=login" method="POST">
-            Usuario: <input type="text" id="user" required="true">
+            Usuario: <input type="text" name="user" required="true">
             <br><br>       
-            Contraseña: <input type="password" id="password" required="true">
+            Contraseña: <input type="password" name="password" required="true">
             <br>
             <br>
             <input type="submit" value ="Submit">

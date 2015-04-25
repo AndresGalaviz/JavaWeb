@@ -7,7 +7,7 @@ package Jeopardy;
  */
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -38,10 +38,12 @@ public class Controlador extends HttpServlet {
             String user = request.getParameter("user");
             String password = request.getParameter("password");
             if (DBhandler.validUser(user, password)) {
-                url = "/inicio.jsp";
+                url = "/menu.jsp";
                 request.getSession().setAttribute("user", user);
                 request.getSession().removeAttribute("message");
+                System.out.println("Mensaje");
             } else {
+                System.out.println(":(");
                 url = "/login.jsp";
                 Integer wrongPassword = 1;
                 String mensaje;
@@ -57,8 +59,13 @@ public class Controlador extends HttpServlet {
                 request.getSession().setAttribute("wrongPassword", wrongPassword);
             }
         }
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
+        
+        
+        RequestDispatcher dispatcher
+                = getServletContext().getRequestDispatcher(url);
+        dispatcher.forward(request, response);
+        
+        /*try (PrintWriter out = response.getWriter()) {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
@@ -68,7 +75,7 @@ public class Controlador extends HttpServlet {
             out.println("<h1>Servlet Controlador at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
-        }
+        }*/
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -6,11 +6,11 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
-    String mensaje = (String) session.getAttribute("mensaje");
-    if (mensaje == null) {
-        mensaje = "";
+    String message = (String) session.getAttribute("message");
+    if (message == null) {
+        message = "";
     }
-    session.removeAttribute("mensaje");
+    session.removeAttribute("message");
 %>
 <!DOCTYPE html>
 <html>
@@ -24,7 +24,7 @@
     <center>
         <h1>Login</h1>
         <h2>Ingresa tus datos:</h2>
-        <p style="color:blue"><%= mensaje%></p>
+        <p style="color:blue"><%= message%></p>
         <form action="Controlador?action=login" method="POST">
             Usuario: <input type="text" name="user" required="true">
             <br><br>       

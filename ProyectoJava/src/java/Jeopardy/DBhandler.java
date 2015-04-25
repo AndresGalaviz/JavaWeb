@@ -34,7 +34,9 @@ public class DBhandler {
         boolean valido = false;
         System.out.println("entrando a funcion");
         try {            
-            //if (connection == null) {return false;}
+            if (connection == null) {
+                connection = DriverManager.getConnection("jdbc:mysql://localhost/jeopardy", "root", "");
+            }
             
             Statement statement = connection.createStatement();
             String query = "select * from perfiles where usuario = '" 

@@ -99,7 +99,7 @@ public class DBhandler {
         
         return materias;
     }
-    
+    /*
     public static void actualizarMateria(Materia materia) {
         try {
             Statement statement = connection.createStatement();
@@ -110,6 +110,7 @@ public class DBhandler {
             Logger.getLogger(DBhandler.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    */
     
     public static int agregarMateria(int idPerfil) {
         int id = -1;
@@ -117,7 +118,6 @@ public class DBhandler {
             Statement statement = connection.createStatement();
             String query;
             query = "insert into materias (nombre, idPerfil) values ('nombre', " + idPerfil + ")";
-            System.out.println(query);
             statement.execute(query);
             query = "select max(id) as id from materias";
             ResultSet results = statement.executeQuery(query);
@@ -151,6 +151,7 @@ public class DBhandler {
         return categorias;
     }
     
+    /*
     public static void actualizarCategoria(Categoria categoria) {
         try {
             Statement statement = connection.createStatement();
@@ -161,6 +162,7 @@ public class DBhandler {
             Logger.getLogger(DBhandler.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    */
 
     public static List<Pregunta> getPreguntas(int idCategoria) {
         List<Pregunta> preguntas = new ArrayList<>();
@@ -184,6 +186,7 @@ public class DBhandler {
         return preguntas;
     }
     
+    /*
     public static void actualizarPregunta(Pregunta pregunta) {
         try {
             Statement statement = connection.createStatement();
@@ -195,4 +198,5 @@ public class DBhandler {
             Logger.getLogger(DBhandler.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    */
 }

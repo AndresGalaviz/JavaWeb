@@ -159,9 +159,9 @@ function agregarMateriaAlHTML() {
     };
     nombre.innerHTML="nombre";
 
-    var borrar = row.insertCell(1);
-    borrar.id = "boton";
-    borrar.className = "celda";
+    var borrarR = row.insertCell(1);
+    borrarR.id = "boton";
+    borrarR.className = "celda";
     
     var boton = document.createElement("button");
     boton.type="button";
@@ -170,6 +170,6 @@ function agregarMateriaAlHTML() {
     };
     boton.innerHTML = "Borrar";
 
-    borrar.appendChild(boton);
+    borrarR.appendChild(boton);
 
 }

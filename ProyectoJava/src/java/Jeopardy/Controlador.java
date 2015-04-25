@@ -7,7 +7,9 @@ package Jeopardy;
  */
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
+import java.util.Map;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -34,7 +36,6 @@ public class Controlador extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         
         String action = request.getParameter("action");
-        System.out.println(action);
         String url = "/";
         if (action.equals("login")) {
             String user = request.getParameter("user");
@@ -65,16 +66,19 @@ public class Controlador extends HttpServlet {
             request.setAttribute("materias", materias);
             url = "/materias.jsp";
         } else if (action.equals("editarMateria")) {
-            if (request.getAttribute("id") == null) {
-                System.out.println("no id");
-            }
-            int id = (int)request.getAttribute("id");
-            String elemento = (String)request.getAttribute("element");
-            String valor = (String)request.getAttribute("valor");
+            int id = Integer.valueOf(request.getParameter("id"));
+            String elemento = (String)request.getParameter("element");
+            String valor = (String)request.getParameter("valor");
             DBhandler.editarTabla("materias", id, elemento, valor);
         } else if (action.equals("borrarMateria")) {
-            int id = (int)request.getAttribute("id");
+            int id = Integer.valueOf(request.getParameter("id"));
             DBhandler.borrarElemento("materias", id);
+        } else if (action.equals("agregarMateria")) {
+            PrintWriter out = response.getWriter();
+            int idPerfil = (int)request.getSession().getAttribute("idPerfil");
+            int id = DBhandler.agregarMateria(idPerfil);
+            out.println(id);
+            return;
         }
         
         

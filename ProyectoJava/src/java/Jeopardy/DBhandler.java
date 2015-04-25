@@ -54,20 +54,26 @@ public class DBhandler {
     }
     
     public static void editarTabla(String tabla, int idElemento, String columna, String valor) {
+        if (connection == null) {
+            createConnection();
+        }
         try {
             Statement statement = connection.createStatement();
             String query = "update " + tabla + " set " + columna + " = '" + valor + "' where id = " + idElemento;
-            statement.executeQuery(query);
+            statement.execute(query);
         } catch (SQLException ex) {
             Logger.getLogger(DBhandler.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
     public static void borrarElemento(String tabla, int idElemento) {
+        if (connection == null) {
+            createConnection();
+        }
         try {
             Statement statement = connection.createStatement();
             String query = "delete from " + tabla + " where id = " + idElemento;
-            statement.executeQuery(query);
+            statement.execute(query);
         } catch (SQLException ex) {
             Logger.getLogger(DBhandler.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -99,10 +105,29 @@ public class DBhandler {
             Statement statement = connection.createStatement();
             String query = "update materias set nombre = '" + materia.getNombre() +
                     "' where id = " + materia.getId();
-            statement.executeQuery(query);
+            statement.execute(query);
         } catch (SQLException ex) {
             Logger.getLogger(DBhandler.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public static int agregarMateria(int idPerfil) {
+        int id = -1;
+        try {
+            Statement statement = connection.createStatement();
+            String query;
+            query = "insert into materias (nombre, idPerfil) values ('nombre', " + idPerfil + ")";
+            System.out.println(query);
+            statement.execute(query);
+            query = "select max(id) as id from materias";
+            ResultSet results = statement.executeQuery(query);
+            if (results.next()) {
+                id = results.getInt("id");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBhandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return id;
     }
     
     public static List<Categoria> getCategorias(int idMateria) {
@@ -131,7 +156,7 @@ public class DBhandler {
             Statement statement = connection.createStatement();
             String query = "update categorias set nombre = '" + categoria.getNombre() +
                     "' where id = " + categoria.getId();
-            statement.executeQuery(query);
+            statement.execute(query);
         } catch (SQLException ex) {
             Logger.getLogger(DBhandler.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -165,7 +190,7 @@ public class DBhandler {
             String query = "update preguntas set pregunta = '" + pregunta.getPregunta() +
                     "', respuesta = '" + pregunta.getRespuesta() +
                     "' where id = " + pregunta.getId();
-            statement.executeQuery(query);
+            statement.execute(query);
         } catch (SQLException ex) {
             Logger.getLogger(DBhandler.class.getName()).log(Level.SEVERE, null, ex);
         }

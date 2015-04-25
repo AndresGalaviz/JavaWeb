@@ -20,7 +20,7 @@
         <table id="tabla-materias">
             <tr>
                 <th>Nombre</th>
-                <th></th>
+                <th>X</th>
             </tr>
             <%
                 List<Materia> materias = (List<Materia>) request.getAttribute("materias");

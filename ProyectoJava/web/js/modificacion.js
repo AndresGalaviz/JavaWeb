@@ -98,12 +98,12 @@ function actualizarBD(tabla, obj, valor, id) {
     if (tabla === 'materias') {
         url = 'Controlador?action=editarMateria';
     }
+    url = url + '&id=' + id;
+    url = url + '&element=' + obj.id;
+    url = url + '&valor=' + valor;
     xhr.open("POST", url, true);
     xhr.onload = function() {};
     var data = new FormData();
-    data.append("id", id);
-    data.append("element", obj.id);
-    data.append("valor", valor);
     xhr.send(data);
 }
 
@@ -114,10 +114,10 @@ function borrar(tabla, id) {
     if (tabla === 'materias') {
         url = 'Controlador?action=borrarMateria';
     }
+    url = url + '&id=' + id;
     xhr.open("POST", url, true);
     xhr.onload = function() {};
     var data = new FormData();
-    data.append("id", id);
     xhr.send(data);
     var row = document.getElementById('row-'+id);
     row.parentNode.removeChild(row);
@@ -135,86 +135,38 @@ function getRequestObject() {
     }
 }
 
-function agregarFila() {
+function agregarMateria() {
     request = getRequestObject();
-    request.onload = agregarFilaAlHTML;
-    request.open("GET", "agregar.php", true);
+    request.onload = agregarMateriaAlHTML;
+    request.open("GET", 'Controlador?action=agregarMateria', true);
     request.send(null);
 }
 
-function agregarFilaAlHTML() {
+function agregarMateriaAlHTML() {
     var id = request.responseText;
-    var table = document.getElementById('tabla-usuarios');
+    if (id === '-1') {
+        return;
+    }
+    var table = document.getElementById('tabla-materias');
     var row = table.insertRow(-1);
-    var rownum = table.rows.length;
+    row.id = 'row-' + id;
 
     var nombre = row.insertCell(0);
     nombre.id="nombre";
     nombre.className="celda";
     nombre.ondblclick=function() {
-        modificar(nombre, id);
+        modificar('materias', nombre, id);
     };
     nombre.innerHTML="nombre";
 
-    var apellido = row.insertCell(1);
-    apellido.id="apellido";
-    apellido.className="celda";
-    apellido.ondblclick=function() {
-        modificar(apellido, id);
-    };
-    apellido.innerHTML="apellido";
-
-    var direccion = row.insertCell(2);
-    direccion.id="direccion";
-    direccion.className="celda";
-    direccion.ondblclick=function() {
-        modificar(direccion, id);
-    };
-    direccion.innerHTML="direccion";
-
-    var codigo = row.insertCell(3);
-    codigo.id="codigo";
-    codigo.className="celda";
-    codigo.ondblclick=function() {
-        modificar(codigo, id);
-    };
-    codigo.innerHTML="codigo";
-
-    var ciudad = row.insertCell(4);
-    ciudad.id="ciudad";
-    ciudad.className="celda";
-    ciudad.ondblclick=function() {
-        modificar(ciudad, id);
-    };
-    ciudad.innerHTML="ciudad";
-
-    var hijos = row.insertCell(5);
-    hijos.id="hijos";
-    hijos.className="celda";
-    hijos.ondblclick=function() {
-        modificar(hijos, id);
-    };
-    hijos.innerHTML="0";
-
-    var email = row.insertCell(6);
-    email.id="email";
-    email.className="celda";
-    email.ondblclick= function () {
-        modificar(email, id);
-    };
-    email.innerHTML="email";
-
-    var borrar = row.insertCell(7);
+    var borrar = row.insertCell(1);
     borrar.id = "boton";
     borrar.className = "celda";
-    //borrar.innerHTML = "<button type=\"button\" onclick=\"borrar(" + id + "," + rownum + ")\">Borrar</button>";
-    //borrar.innerHTML = "Borrar";
-    borrar.className = "celda";
-
+    
     var boton = document.createElement("button");
     boton.type="button";
     boton.onclick = function () {
-        borrar(id, rownum);
+        borrar('materias', id);
     };
     boton.innerHTML = "Borrar";
 

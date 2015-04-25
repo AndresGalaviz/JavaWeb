@@ -4,7 +4,7 @@ Source Host: localhost
 Source Database: jeopardy
 Target Host: localhost
 Target Database: jeopardy
-Date: 24/04/2015 08:38:14 p.m.
+Date: 25/04/2015 01:01:55 p.m.
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -54,6 +54,8 @@ CREATE TABLE `perfiles` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `usuario` varchar(20) DEFAULT NULL,
   `password` varchar(20) DEFAULT NULL,
+  `bloqueado` bit(1) DEFAULT NULL,
+  `cuentaBloqueo` int(11) DEFAULT '3',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
@@ -83,4 +85,4 @@ CREATE TABLE `resultados` (
 -- ----------------------------
 -- Records 
 -- ----------------------------
-INSERT INTO `perfiles` VALUES ('1', 'admin', 'admin');
+INSERT INTO `perfiles` VALUES ('1', 'admin', 'admin', '', '3');

@@ -10,7 +10,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Crear/editar materias</title>
         <link rel="StyleSheet" type="text/css" href="css/tabla.css"/>
         <script type="text/javascript" src="js/modificacion.js"></script>
@@ -37,9 +37,9 @@
                 }
             %>
         </table>
-        <div>
-            <button type="button" onclick="agregarMateria()">Agregar materia</button>
-        </div>
+        
+        <button type="button" onclick="agregarMateria()">Agregar materia</button>
+        
 
     </body>
 </html>

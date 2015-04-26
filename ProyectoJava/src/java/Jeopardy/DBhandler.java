@@ -163,6 +163,24 @@ public class DBhandler {
         }
     }
     */
+    
+    public static int agregarCategoria(int idMateria) {
+        int id = -1;
+        try {
+            Statement statement = connection.createStatement();
+            String query;
+            query = "insert into categorias (nombre, idMateria) values ('nombre', " + idMateria + ")";
+            statement.execute(query);
+            query = "select max(id) as id from categorias";
+            ResultSet results = statement.executeQuery(query);
+            if (results.next()) {
+                id = results.getInt("id");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBhandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return id;
+    }
 
     public static List<Pregunta> getPreguntas(int idCategoria) {
         List<Pregunta> preguntas = new ArrayList<>();

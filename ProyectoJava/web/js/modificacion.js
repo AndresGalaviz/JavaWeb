@@ -97,6 +97,8 @@ function actualizarBD(tabla, obj, valor, id) {
     var url = '/';
     if (tabla === 'materias') {
         url = 'Controlador?action=editarMateria';
+    } else if (tabla === 'categorias') {
+        url = 'Controlador?action=editarCategoria';
     }
     url = url + '&id=' + id;
     url = url + '&element=' + obj.id;
@@ -107,12 +109,13 @@ function actualizarBD(tabla, obj, valor, id) {
     xhr.send(data);
 }
 
-
 function borrar(tabla, id) {
     var xhr = new XMLHttpRequest();
     var url = '/';
     if (tabla === 'materias') {
         url = 'Controlador?action=borrarMateria';
+    } else if (tabla === 'categorias') {
+        url = 'Controlador?action=borrarCategoria';
     }
     url = url + '&id=' + id;
     xhr.open("POST", url, true);
@@ -137,22 +140,43 @@ function getRequestObject() {
 
 function agregarMateria() {
     request = getRequestObject();
-    request.onload = agregarMateriaAlHTML;
+    request.onload = agregarMateriaAux;
     request.open("GET", 'Controlador?action=agregarMateria', true);
     request.send(null);
 }
 
-function agregarMateriaAlHTML() {
+function agregarMateriaAux() {
     var id = request.responseText;
     if (id === '-1') {
         return;
     }
+    agregarMateriaAlHTML(id, 'nombre');
+}
+
+function agregarCategoria(materia) {
+    if (materia === 'dummy')
+        return;
+    request = getRequestObject();
+    request.onload = agregarCategoriaAux;
+    request.open("GET", 'Controlador?action=agregarCategoria&idMateria=' + materia, true);
+    request.send(null);
+}
+
+function agregarCategoriaAux() {
+    var id = request.responseText;
+    if (id === '-1') {
+        return;
+    }
+    agregarCategoriaAlHTML(id, "nombre");
+}
+
+function agregarMateriaAlTHML(id, nombreVal) {
     var table = document.getElementById('tabla-materias');
     var row = table.insertRow(-1);
     row.id = 'row-' + id;
 
     var nombre = row.insertCell(0);
-    nombre.id="nombre";
+    nombre.id=nombreVal;
     nombre.className="celda";
     nombre.ondblclick=function() {
         modificar('materias', nombre, id);
@@ -171,5 +195,51 @@ function agregarMateriaAlHTML() {
     boton.innerHTML = "Borrar";
 
     borrarR.appendChild(boton);
+}
 
+function agregarCategoriaAlHTML(id, nombreVal) {
+    var table = document.getElementById('tabla-categorias');
+    var row = table.insertRow(-1);
+    row.id = 'row-' + id;
+
+    var nombre = row.insertCell(0);
+    nombre.id="nombre";
+    nombre.className="celda";
+    nombre.ondblclick=function() {
+        modificar('categorias', nombre, id);
+    };
+    nombre.innerHTML=nombreVal;
+
+    var borrarR = row.insertCell(1);
+    borrarR.id = "boton";
+    borrarR.className = "celda";
+    
+    var boton = document.createElement("button");
+    boton.type="button";
+    boton.onclick = function () {
+        borrar('categorias', id);
+    };
+    boton.innerHTML = "Borrar";
+
+    borrarR.appendChild(boton);
+}
+
+function cargaCategorias(materia) {
+    var tabla = document.getElementById("tabla-categorias");
+    var rowCount = tabla.rows.length;
+    while (--rowCount) {
+        tabla.deleteRow(rowCount);
+    }
+    $.ajax({
+       url: 'Controlador?action=cargarCategorias&materia=' + materia,
+       type: 'GET',
+       dataType: 'xml',
+       success: function(returnedXMLResponse) {
+           $('categoria', returnedXMLResponse).each(function() {
+               var nombre = $(this).attr('nombre');
+               var id = $(this).attr('id');
+               agregarCategoriaAlHTML(id, nombre);
+           });
+       }
+    });
 }

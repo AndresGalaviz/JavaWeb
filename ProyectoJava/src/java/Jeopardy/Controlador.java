@@ -9,7 +9,6 @@ package Jeopardy;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
-import java.util.Map;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -77,6 +76,30 @@ public class Controlador extends HttpServlet {
             PrintWriter out = response.getWriter();
             int idPerfil = (int)request.getSession().getAttribute("idPerfil");
             int id = DBhandler.agregarMateria(idPerfil);
+            out.println(id);
+            return;
+        } else if (action.equals("categorias")) {
+            int idPerfil = (int)request.getSession().getAttribute("idPerfil");
+            List<Materia> materias = DBhandler.getMaterias(idPerfil);
+            request.setAttribute("materias", materias);
+            url = "/categorias.jsp";
+        } else if (action.equals("cargarCategorias")) {
+            int idMateria = Integer.valueOf(request.getParameter("materia"));
+            List<Categoria> categorias = DBhandler.getCategorias(idMateria);
+            request.setAttribute("categorias", categorias);
+            url = "/categoriasXML.jsp";
+        } else if (action.equals("editarCategoria")) {
+            int id = Integer.valueOf(request.getParameter("id"));
+            String elemento = (String)request.getParameter("element");
+            String valor = (String)request.getParameter("valor");
+            DBhandler.editarTabla("categorias", id, elemento, valor);
+        } else if (action.equals("borrarCategoria")) {
+            int id = Integer.valueOf(request.getParameter("id"));
+            DBhandler.borrarElemento("categorias", id);
+        } else if (action.equals("agregarCategoria")) {
+            PrintWriter out = response.getWriter();
+            int idMateria = Integer.valueOf(request.getParameter("idMateria"));
+            int id = DBhandler.agregarCategoria(idMateria);
             out.println(id);
             return;
         }

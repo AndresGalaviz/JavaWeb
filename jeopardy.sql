@@ -4,7 +4,7 @@ Source Host: localhost
 Source Database: jeopardy
 Target Host: localhost
 Target Database: jeopardy
-Date: 25/04/2015 01:01:55 p.m.
+Date: 26/04/2015 04:34:33 p.m.
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -17,7 +17,7 @@ CREATE TABLE `categorias` (
   `nombre` varchar(30) DEFAULT NULL,
   `idMateria` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Table structure for juegos
@@ -44,7 +44,7 @@ CREATE TABLE `materias` (
   `nombre` varchar(30) DEFAULT NULL,
   `idPerfil` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Table structure for perfiles
@@ -67,9 +67,10 @@ CREATE TABLE `preguntas` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `pregunta` varchar(100) DEFAULT NULL,
   `respuesta` varchar(100) DEFAULT NULL,
+  `puntos` int(11) DEFAULT NULL,
   `idCategoria` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Table structure for resultados
@@ -85,4 +86,18 @@ CREATE TABLE `resultados` (
 -- ----------------------------
 -- Records 
 -- ----------------------------
+INSERT INTO `categorias` VALUES ('1', 'Algebra', '2');
+INSERT INTO `categorias` VALUES ('2', 'Trigonometria', '2');
+INSERT INTO `categorias` VALUES ('5', 'Geometria', '2');
+INSERT INTO `categorias` VALUES ('6', 'Gramatica', '4');
+INSERT INTO `categorias` VALUES ('7', 'Biologia', '5');
+INSERT INTO `categorias` VALUES ('9', 'Combinatoria', '2');
+INSERT INTO `categorias` VALUES ('10', 'Calculo', '2');
+INSERT INTO `categorias` VALUES ('11', 'Quimica', '5');
+INSERT INTO `materias` VALUES ('2', 'Matematicas', '1');
+INSERT INTO `materias` VALUES ('4', 'Español', '1');
+INSERT INTO `materias` VALUES ('5', 'Ciencias', '1');
 INSERT INTO `perfiles` VALUES ('1', 'admin', 'admin', '', '3');
+INSERT INTO `preguntas` VALUES ('1', 'Pregunta 1', 'Respuesta 1', '100', '1');
+INSERT INTO `preguntas` VALUES ('2', 'Pregunta 2', 'Respuesta 2', '200', '1');
+INSERT INTO `preguntas` VALUES ('4', 'Pregunta 3', 'Respuesta 3', '300', '1');

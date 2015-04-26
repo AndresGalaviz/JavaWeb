@@ -195,7 +195,8 @@ public class DBhandler {
                 int id = results.getInt("id");
                 String pregunta = results.getString("pregunta");
                 String respuesta = results.getString("respuesta");
-                preguntas.add(new Pregunta(id, pregunta, respuesta));
+                int puntos = results.getInt("puntos");
+                preguntas.add(new Pregunta(id, pregunta, respuesta, puntos));
             }
         } catch (SQLException ex) {
             Logger.getLogger(DBhandler.class.getName()).log(Level.SEVERE, null, ex);
@@ -217,4 +218,23 @@ public class DBhandler {
         }
     }
     */
+    
+    public static int agregarPregunta(int idCategoria) {
+        int id = -1;
+        try {
+            Statement statement = connection.createStatement();
+            String query;
+            query = "insert into preguntas (pregunta, respuesta, puntos, idCategoria) "
+                    + "values ('pregunta', 'respuesta', 0, " + idCategoria + ")";
+            statement.execute(query);
+            query = "select max(id) as id from preguntas";
+            ResultSet results = statement.executeQuery(query);
+            if (results.next()) {
+                id = results.getInt("id");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBhandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return id;
+    }
 }

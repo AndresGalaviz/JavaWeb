@@ -10,16 +10,17 @@ package Jeopardy;
  * @author Alberto
  */
 public class Pregunta {
-    private int id;
+    private int id, puntos;
     private String pregunta, respuesta;
     Pregunta() {
         id = 0;
         pregunta = respuesta = "";
     }
-    Pregunta(int id, String pregunta, String respuesta) {
+    Pregunta(int id, String pregunta, String respuesta, int puntos) {
         this.id = id;
         this.pregunta = pregunta;
         this.respuesta = respuesta;
+        this.puntos = puntos;
     }
     public void setId(int id) {
         this.id = id;
@@ -38,5 +39,11 @@ public class Pregunta {
     }
     public String getRespuesta() {
         return respuesta;
+    }
+    public void setPuntos(int puntos) {
+        this.puntos = puntos;
+    }
+    public int getPuntos() {
+        return puntos;
     }
 }

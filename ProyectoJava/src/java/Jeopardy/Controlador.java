@@ -102,6 +102,30 @@ public class Controlador extends HttpServlet {
             int id = DBhandler.agregarCategoria(idMateria);
             out.println(id);
             return;
+        } else if (action.equals("preguntas")) {
+            int idPerfil = (int)request.getSession().getAttribute("idPerfil");
+            List<Materia> materias = DBhandler.getMaterias(idPerfil);
+            request.setAttribute("materias", materias);
+            url = "/preguntas.jsp";
+        } else if (action.equals("cargarPreguntas")) {
+            int idCategoria = Integer.valueOf(request.getParameter("categoria"));
+            List<Pregunta> preguntas = DBhandler.getPreguntas(idCategoria);
+            request.setAttribute("preguntas", preguntas);
+            url = "/preguntasXML.jsp";
+        } else if (action.equals("editarPregunta")) {
+            int id = Integer.valueOf(request.getParameter("id"));
+            String elemento = (String)request.getParameter("element");
+            String valor = (String)request.getParameter("valor");
+            DBhandler.editarTabla("preguntas", id, elemento, valor);
+        } else if (action.equals("borrarPregunta")) {
+            int id = Integer.valueOf(request.getParameter("id"));
+            DBhandler.borrarElemento("preguntas", id);
+        } else if (action.equals("agregarPregunta")) {
+            PrintWriter out = response.getWriter();
+            int idCategoria = Integer.valueOf(request.getParameter("idCategoria"));
+            int id = DBhandler.agregarPregunta(idCategoria);
+            out.println(id);
+            return;
         }
         
         

@@ -99,6 +99,8 @@ function actualizarBD(tabla, obj, valor, id) {
         url = 'Controlador?action=editarMateria';
     } else if (tabla === 'categorias') {
         url = 'Controlador?action=editarCategoria';
+    } else if (tabla === 'preguntas') {
+        url = 'Controlador?action=editarPregunta';
     }
     url = url + '&id=' + id;
     url = url + '&element=' + obj.id;
@@ -116,6 +118,8 @@ function borrar(tabla, id) {
         url = 'Controlador?action=borrarMateria';
     } else if (tabla === 'categorias') {
         url = 'Controlador?action=borrarCategoria';
+    } else if (tabla === 'preguntas') {
+        url = 'Controlador?action=borrarPregunta';
     }
     url = url + '&id=' + id;
     xhr.open("POST", url, true);
@@ -168,6 +172,23 @@ function agregarCategoriaAux() {
         return;
     }
     agregarCategoriaAlHTML(id, "nombre");
+}
+
+function agregarPregunta(categoria) {
+    if (categoria === 'dummy')
+        return;
+    request = getRequestObject();
+    request.onload = agregarPreguntaAux;
+    request.open("GET", 'Controlador?action=agregarPregunta&idCategoria=' + categoria, true);
+    request.send(null);
+}
+
+function agregarPreguntaAux() {
+    var id = request.responseText;
+    if (id === '-1') {
+        return;
+    }
+    agregarPreguntaAlHTML(id, 'pregunta', 'respuesta', '0');
 }
 
 function agregarMateriaAlTHML(id, nombreVal) {
@@ -224,22 +245,106 @@ function agregarCategoriaAlHTML(id, nombreVal) {
     borrarR.appendChild(boton);
 }
 
+function agregarPreguntaAlHTML(id, preguntaVal, respuestaVal, puntosVal) {
+    var table = document.getElementById('tabla-preguntas');
+    var row = table.insertRow(-1);
+    row.id = 'row-' + id;
+
+    var pregunta = row.insertCell(0);
+    pregunta.id="pregunta";
+    pregunta.className="celda";
+    pregunta.ondblclick=function() {
+        modificar('preguntas', pregunta, id);
+    };
+    pregunta.innerHTML=preguntaVal;
+
+    var respuesta = row.insertCell(1);
+    respuesta.id="respuesta";
+    respuesta.className="celda";
+    respuesta.ondblclick=function() {
+        modificar('preguntas', respuesta, id);
+    };
+    respuesta.innerHTML=respuestaVal;
+    
+    var puntos = row.insertCell(2);
+    puntos.id="puntos";
+    puntos.className="celda";
+    puntos.ondblclick=function() {
+        modificar('preguntas', puntos, id);
+    };
+    puntos.innerHTML=puntosVal;
+    
+    var borrarR = row.insertCell(3);
+    borrarR.id = "boton";
+    borrarR.className = "celda";
+    
+    var boton = document.createElement("button");
+    boton.type="button";
+    boton.onclick = function () {
+        borrar('preguntas', id);
+    };
+    boton.innerHTML = "Borrar";
+
+    borrarR.appendChild(boton);
+}
+
 function cargaCategorias(materia) {
-    var tabla = document.getElementById("tabla-categorias");
+    $.ajax({
+        url: 'Controlador?action=cargarCategorias&materia=' + materia,
+        type: 'GET',
+        dataType: 'xml',
+        success: function(returnedXMLResponse) {
+            vaciarTabla('tabla-categorias');
+            $('categoria', returnedXMLResponse).each(function() {
+                var id = $(this).attr('id');
+                var nombre = $(this).attr('nombre');
+                agregarCategoriaAlHTML(id, nombre);
+            });
+        }
+    });
+}
+
+function cargaCategoriasDropdown(materia) {
+    vaciarTabla('tabla-preguntas');
+    $.ajax({
+        url: 'Controlador?action=cargarCategorias&materia=' + materia,
+        type: 'GET',
+        dataType: 'xml',
+        success: function(returnedXMLResponse) {
+            $('#categoria option:gt(0)').remove();
+            var $el = $('#categoria');
+            $('categoria', returnedXMLResponse).each(function() {
+                var nombre = $(this).attr('nombre');
+                var id = $(this).attr('id');
+                $el.append($("<option></option>").attr("value", id).text(nombre));
+            });
+            $el.val('dummy');
+        }
+    });
+}
+
+function cargaPreguntas(categoria) {
+    $.ajax({
+        url: 'Controlador?action=cargarPreguntas&categoria=' + categoria,
+        type: 'GET',
+        dataType: 'xml',
+        success: function(returnedXMLResponse) {
+            vaciarTabla('tabla-preguntas');
+            $('pregunta', returnedXMLResponse).each(function() {
+                var id = $(this).attr('id');
+                var pregunta = $(this).attr('pregunta');
+                var respuesta = $(this).attr('respuesta');
+                var puntos = $(this).attr('puntos');
+                agregarPreguntaAlHTML(id, pregunta, respuesta, puntos);
+            });
+        }
+    });
+}
+
+function vaciarTabla(idTabla) {
+    var tabla = document.getElementById(idTabla);
     var rowCount = tabla.rows.length;
     while (--rowCount) {
         tabla.deleteRow(rowCount);
     }
-    $.ajax({
-       url: 'Controlador?action=cargarCategorias&materia=' + materia,
-       type: 'GET',
-       dataType: 'xml',
-       success: function(returnedXMLResponse) {
-           $('categoria', returnedXMLResponse).each(function() {
-               var nombre = $(this).attr('nombre');
-               var id = $(this).attr('id');
-               agregarCategoriaAlHTML(id, nombre);
-           });
-       }
-    });
 }

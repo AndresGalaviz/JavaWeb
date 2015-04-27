@@ -126,6 +126,13 @@ public class Controlador extends HttpServlet {
             int id = DBhandler.agregarPregunta(idCategoria);
             out.println(id);
             return;
+        } else if (action.equals("juego")) {
+            int idPerfil = (int)request.getSession().getAttribute("idPerfil");
+            List<Materia> materias = DBhandler.getMaterias(idPerfil);
+            request.setAttribute("materias", materias);
+            url = "/configJuego.jsp";
+        } else if (action.equals("iniciarJuego")) {
+            System.out.println("iniciando juego!");
         }
         
         

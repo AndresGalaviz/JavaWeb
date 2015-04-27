@@ -4,7 +4,7 @@ Source Host: localhost
 Source Database: jeopardy
 Target Host: localhost
 Target Database: jeopardy
-Date: 26/04/2015 04:34:33 p.m.
+Date: 26/04/2015 10:40:27 p.m.
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -70,7 +70,7 @@ CREATE TABLE `preguntas` (
   `puntos` int(11) DEFAULT NULL,
   `idCategoria` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Table structure for resultados
@@ -101,3 +101,6 @@ INSERT INTO `perfiles` VALUES ('1', 'admin', 'admin', '', '3');
 INSERT INTO `preguntas` VALUES ('1', 'Pregunta 1', 'Respuesta 1', '100', '1');
 INSERT INTO `preguntas` VALUES ('2', 'Pregunta 2', 'Respuesta 2', '200', '1');
 INSERT INTO `preguntas` VALUES ('4', 'Pregunta 3', 'Respuesta 3', '300', '1');
+INSERT INTO `preguntas` VALUES ('5', 'Pregunta 4', 'Respuesta 4', '400', '1');
+INSERT INTO `preguntas` VALUES ('6', 'Cuanto es el seno de 30°', '0.5', '100', '2');
+INSERT INTO `preguntas` VALUES ('7', 'Pregunta 5', 'Respuesta 5', '500', '1');

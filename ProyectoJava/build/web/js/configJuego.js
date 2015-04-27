@@ -9,6 +9,7 @@ function cargarCategorias(materia) {
         success: function(returnedXMLResponse) {
             $divP = $('#seleccionCategorias');
             $divP.empty();
+            $('#seleccionPreguntas').empty();
             $divP.append($('<p></p>').text('Elige cinco categorias:'));
             $('categoria', returnedXMLResponse).each(function() {
                 var id = $(this).attr('id');
@@ -18,6 +19,7 @@ function cargarCategorias(materia) {
                 $divP.append(nombre + '<br>');
             });
             $boton = $('<button></button>').attr('type', 'button').attr('onclick', 'cargarMaterias()').text('Aceptar');
+            $divP.append('<br>');
             $divP.append($boton);
         }
     });
@@ -34,6 +36,7 @@ function cargarMaterias() {
         $select = $('<select></select>').attr('id', 'categoria').attr('onChange', 'aparecerPreguntas(this.value)');
         $select.append($('<option disabled select></option>').attr('value', 'dummy').text(' -- Elige una categoria -- '));
         $divP.append($select);
+        $divP.append('<br>');
         $("input[name='categorias']:checked").each(function() {
             $opt = $('<option></option>').attr('value', $(this).attr('value')).text($(this).attr('nombre'));
             $select.append($opt);
@@ -65,6 +68,7 @@ function cargarPreguntas(categoria) {
         dataType: 'xml',
         success: function(returnedXMLResponse) {
             $divX = $("div[categoria='" + categoria + "']");
+            $divX.append($('<p></p>').text('Elige cinco preguntas para esta categoria:'));
             $('pregunta', returnedXMLResponse).each(function() {
                 var id = $(this).attr('id');
                 var pregunta = $(this).attr('pregunta');

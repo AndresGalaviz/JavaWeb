@@ -191,7 +191,7 @@ function agregarPreguntaAux() {
     agregarPreguntaAlHTML(id, 'pregunta', 'respuesta', '0');
 }
 
-function agregarMateriaAlTHML(id, nombreVal) {
+function agregarMateriaAlHTML(id, nombreVal) {
     var table = document.getElementById('tabla-materias');
     var row = table.insertRow(-1);
     row.id = 'row-' + id;

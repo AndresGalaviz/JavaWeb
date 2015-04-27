@@ -40,25 +40,32 @@ public class Controlador extends HttpServlet {
             String user = request.getParameter("user");
             String password = request.getParameter("password");
             int id = DBhandler.validarUsuario(user, password);
-            if (id != -1) {
+            Integer wrongPassword = DBhandler.getCuentaBloqueo(user);
+            if (id != -1 && wrongPassword > 0) {
                 url = "/menu.jsp";
                 request.getSession().setAttribute("idPerfil", id);
+                request.getSession().setAttribute("usuario", user);
                 request.getSession().removeAttribute("message");
             } else {
                 url = "/login.jsp";
-                Integer wrongPassword = 1;
+                wrongPassword -=  1;
+                if(wrongPassword >= 0)
+                    DBhandler.editarPorUsuario("perfiles", user, "cuentaBloqueo", wrongPassword);
+                
                 String mensaje;
-                if(request.getSession().getAttribute("wrongPassword") != null) {
-                    wrongPassword += (Integer) request.getSession().getAttribute("wrongPassword");
-                } 
-                mensaje = "Contraseña incorrecta, intente de nuevo. Tiene " + String.valueOf(3-wrongPassword) + " intentos mas.";
-                if(wrongPassword >= 3) {
+                
+                mensaje = "Contraseña incorrecta, intente de nuevo. Tiene " + String.valueOf(wrongPassword) + " intentos mas.";
+                if(wrongPassword <= 0) {
                         // TODO: Bloquear usuario
+                    DBhandler.editarPorUsuario("perfiles", user, "bloqueado", 1);
                     mensaje = "Su cuenta ha sido bloqueada";
                 }
                 request.getSession().setAttribute("message", mensaje);
-                request.getSession().setAttribute("wrongPassword", wrongPassword);
+                
             }
+        }
+        if(request.getSession().getAttribute("idPerfil") == null) {
+            url = "/login.jsp";
         } else if (action.equals("materias")) {
             int idPerfil = (int)request.getSession().getAttribute("idPerfil");
             List<Materia> materias = DBhandler.getMaterias(idPerfil);
@@ -133,6 +140,10 @@ public class Controlador extends HttpServlet {
             url = "/configJuego.jsp";
         } else if (action.equals("iniciarJuego")) {
 
+        } else if (action.equals("logout")) {
+            request.getSession().removeAttribute("usuario");
+            request.getSession().removeAttribute("idPerfil");
+            url = "/login.jsp";
         }
         
         

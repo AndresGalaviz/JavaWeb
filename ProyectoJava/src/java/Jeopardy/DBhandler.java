@@ -24,7 +24,7 @@ public class DBhandler {
     
     private static void createConnection() {
         try {
-            //Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.jdbc.Driver");
             connection = DriverManager.getConnection("jdbc:mysql://localhost/jeopardy", "root", "");
         } catch (Exception e) {
             e.printStackTrace();
@@ -53,6 +53,28 @@ public class DBhandler {
         return id;
     }
     
+        public static int getCuentaBloqueo(String usuario) {
+        int cuentaBloqueo = -1;
+        try {            
+            if (connection == null) {
+                createConnection();
+            }
+            
+            Statement statement = connection.createStatement();
+            String query = "select cuentaBloqueo from perfiles where usuario = '" 
+                    + usuario + "'";
+            ResultSet results = statement.executeQuery(query);
+            if (results.next()) {
+                cuentaBloqueo = results.getInt("cuentaBloqueo");
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(DBhandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return cuentaBloqueo;
+    }
+    
     public static void editarTabla(String tabla, int idElemento, String columna, String valor) {
         if (connection == null) {
             createConnection();
@@ -60,6 +82,19 @@ public class DBhandler {
         try {
             Statement statement = connection.createStatement();
             String query = "update " + tabla + " set " + columna + " = '" + valor + "' where id = " + idElemento;
+            statement.execute(query);
+        } catch (SQLException ex) {
+            Logger.getLogger(DBhandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static void editarPorUsuario(String tabla, String user, String columna, int valor) {
+        if (connection == null) {
+            createConnection();
+        }
+        try {
+            Statement statement = connection.createStatement();
+            String query = "update " + tabla + " set " + columna + " = " + String.valueOf(valor) + " where usuario = '" + user + "'";
             statement.execute(query);
         } catch (SQLException ex) {
             Logger.getLogger(DBhandler.class.getName()).log(Level.SEVERE, null, ex);

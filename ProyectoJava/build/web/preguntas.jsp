@@ -7,6 +7,15 @@
 <%@page import="java.util.List"%>
 <%@page import="Jeopardy.Materia"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%
+    if (session.getAttribute("usuario") == null) {%>
+        <jsp:forward page="login.jsp" />
+    <%} 
+    if(request.getAttribute("materias") == null) {
+        %>
+        <jsp:forward page="menu.jsp" />
+    <%}
+%>
 <!DOCTYPE html>
 <html>
     <head>

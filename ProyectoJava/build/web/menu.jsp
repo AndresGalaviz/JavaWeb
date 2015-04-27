@@ -19,6 +19,8 @@
         <a href="Controlador?action=categorias">Crear/editar categorías</a><br>
         <a href="Controlador?action=preguntas">Crear/editar preguntas</a><br>
         <a href="Controlador?action=juego">Iniciar juego</a><br>
+        <hr>
+        <a href="Controlador?action=logout">Logout</a><br>
         
     </center>
     </body>

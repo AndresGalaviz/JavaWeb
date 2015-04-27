@@ -132,7 +132,7 @@ public class Controlador extends HttpServlet {
             request.setAttribute("materias", materias);
             url = "/configJuego.jsp";
         } else if (action.equals("iniciarJuego")) {
-            System.out.println("iniciando juego!");
+
         }
         
         

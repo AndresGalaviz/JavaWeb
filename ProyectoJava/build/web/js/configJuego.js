@@ -43,7 +43,7 @@ function cargarMaterias() {
         });
         $select.val('dummy');
         $divP.append('<br>');
-        $divP.append($('<button type="submit">Iniciar juego</button>'));
+        $divP.append($('<button type="button" onclick="iniciarJuego()">Iniciar juego</button>'));
     }
 }
 
@@ -68,10 +68,26 @@ function cargarPreguntas(categoria) {
             $('pregunta', returnedXMLResponse).each(function() {
                 var id = $(this).attr('id');
                 var pregunta = $(this).attr('pregunta');
-                $input = $('<input>').attr('type', 'checkbox').attr('name', 'idPreguntas').attr('value', id);
+                $input = $('<input>').attr('type', 'checkbox').attr('name', 'idPreguntas' + categoria).attr('value', id);
                 $divX.append($input);
                 $divX.append(pregunta + '<br>')
             });
         }
     });
+}
+
+function iniciarJuego() {
+    var preguntasCompletas = true;
+    $("div[id='preguntas']").each(function() {
+        var categoria = $(this).attr('categoria');
+        var count = $("input[name='idPreguntas" + categoria + "']:checked").size();
+        if (count !== 5) {
+            preguntasCompletas = false;
+        }
+    });
+    if (!preguntasCompletas) {
+        alert('No se eligieron 5 preguntas para cada categoria');
+    } else {
+        document.getElementById("configJuego").submit();
+    }
 }

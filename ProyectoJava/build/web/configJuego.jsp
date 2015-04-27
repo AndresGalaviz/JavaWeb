@@ -21,7 +21,7 @@
         <form id="configJuego" name="configJuego" method="post" action="Controlador?action=iniciarJuego">
         <div id="seleccionMateria">
             <p>Elige una materia:</p>
-            <select id="materia">
+            <select id="materia" name="materia">
                 <option disabled selected value="dummy"> -- Elige una materia -- </option>
                 <%
                     List<Materia> materias = (List<Materia>) request.getAttribute("materias");

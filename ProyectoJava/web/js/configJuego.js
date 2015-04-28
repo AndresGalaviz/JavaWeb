@@ -78,7 +78,7 @@ function cargarPreguntas(categoria) {
                 var pregunta = $(this).attr('pregunta');
                 var respuesta = $(this).attr('respuesta');
                 var puntos = $(this).attr('puntos');
-                $input = $('<input>').attr('type', 'checkbox').attr('name', 'idPreguntas' + categoria).attr('value', id);
+                $input = $('<input>').attr('type', 'checkbox').attr('name', 'idPreguntas').attr('categoria', categoria).attr('value', id);
                 //$divX.append($input);
                 //$divX.append(pregunta + '<br>')
                 $cellPregunta = $('<td>' + pregunta + '</td>').attr('class', 'celda');
@@ -97,7 +97,7 @@ function iniciarJuego() {
     var preguntasCompletas = true;
     $("div[id='preguntas']").each(function() {
         var categoria = $(this).attr('categoria');
-        var count = $("input[name='idPreguntas" + categoria + "']:checked").size();
+        var count = $("input[categoria='" + categoria + "']:checked").size();
         if (count !== 5) {
             preguntasCompletas = false;
         }

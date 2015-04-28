@@ -69,12 +69,25 @@ function cargarPreguntas(categoria) {
         success: function(returnedXMLResponse) {
             $divX = $("div[categoria='" + categoria + "']");
             $divX.append($('<p></p>').text('Elige cinco preguntas para esta categoria:'));
+            $tabla = $('<table></table>').attr('id', 'tabla-preguntas-check');
+            $row = $('<tr><th>Pregunta</th><th>Respuesta</th><th>Puntos</th><th>Elegir</th></tr>');
+            $tabla.append($row);
+            $divX.append($tabla);
             $('pregunta', returnedXMLResponse).each(function() {
                 var id = $(this).attr('id');
                 var pregunta = $(this).attr('pregunta');
+                var respuesta = $(this).attr('respuesta');
+                var puntos = $(this).attr('puntos');
                 $input = $('<input>').attr('type', 'checkbox').attr('name', 'idPreguntas' + categoria).attr('value', id);
-                $divX.append($input);
-                $divX.append(pregunta + '<br>')
+                //$divX.append($input);
+                //$divX.append(pregunta + '<br>')
+                $cellPregunta = $('<td>' + pregunta + '</td>').attr('class', 'celda');
+                $cellRespuesta = $('<td>' + respuesta + '</td>').attr('class', 'celda');
+                $cellPuntos = $('<td>' + puntos + '</td>').attr('class', 'celda');
+                $cellElegir = $('<td></td>').attr('class', 'celda');
+                $cellElegir.append($input);
+                $row = $('<tr></tr>').append($cellPregunta).append($cellRespuesta).append($cellPuntos).append($cellElegir);
+                $tabla.append($row);
             });
         }
     });

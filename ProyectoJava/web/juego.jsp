@@ -33,7 +33,7 @@
                 <div id="jugadores">
                     <select id="seleccionarUsuario">
                         <option>Andres</option>
-                        <option>Juan</option>
+                        <option>Alberto</option>
                     </select>
                     
                     <div id="puntos"></div>

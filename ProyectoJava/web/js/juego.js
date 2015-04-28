@@ -46,4 +46,5 @@ $('select[name="seleccionarUsuario"]').change(function(){
         usuario = $( "#seleccionarUsuario option:selected" ).text();
         document.getElementById("puntos").innerHTML = usuarios[usuario];
     
+    
 });

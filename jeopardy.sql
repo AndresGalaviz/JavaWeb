@@ -4,7 +4,7 @@ Source Host: localhost
 Source Database: jeopardy
 Target Host: localhost
 Target Database: jeopardy
-Date: 27/04/2015 11:35:08 p.m.
+Date: 27/04/2015 11:47:16 p.m.
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -80,6 +80,7 @@ CREATE TABLE `resultados` (
   `id` int(11) NOT NULL,
   `nombre` varchar(20) DEFAULT NULL,
   `puntos` int(11) DEFAULT NULL,
+  `idJuego` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 

@@ -31,6 +31,12 @@ public class DBhandler {
         }
     }
     
+    /**
+     * recibe un usuario y password, y regresa el id si es valido, o -1 si no lo es
+     * @param usuario
+     * @param pw
+     * @return 
+     */
     public static int validarUsuario(String usuario, String pw) {
         int id = -1;
         try {            
@@ -53,6 +59,12 @@ public class DBhandler {
         return id;
     }
     
+    /**
+     * Crea un nuevo usuario, le asigna una contrasena random y le envia correo
+     * @param usuario
+     * @param correo
+     * @return 
+     */
     public static String crearUsuario(String usuario, String correo) {
         String pw = RandomPassword.randomPassword(10);
         System.out.println(pw);
@@ -71,6 +83,11 @@ public class DBhandler {
         return pw;
     }
     
+    /**
+     * Regresa la informacion sobre el bloqueo de una cuenta
+     * @param usuario
+     * @return 
+     */
     public static int getCuentaBloqueo(String usuario) {
         int cuentaBloqueo = -1;
         try {            
@@ -93,6 +110,11 @@ public class DBhandler {
         return cuentaBloqueo;
     }
     
+    /**
+     * Le indica si el usuario es nuevo o no
+     * @param usuario
+     * @return 
+     */
     public static boolean getUsuarioNuevo(String usuario) {
         boolean usuarioNuevo = false;
         try {            
@@ -115,6 +137,13 @@ public class DBhandler {
         return usuarioNuevo;
     }
     
+    /**
+     * Edita un registro de una tabla
+     * @param tabla nombre de la tabla
+     * @param idElemento id del renglon a modificar
+     * @param columna nombre de la columna a modificar
+     * @param valor valor que tomara la columna
+     */
     public static void editarTabla(String tabla, int idElemento, String columna, String valor) {
         if (connection == null) {
             createConnection();
@@ -128,6 +157,13 @@ public class DBhandler {
         }
     }
     
+    /**
+     * Similar a la funcion anterior pero valor es entero
+     * @param tabla
+     * @param user
+     * @param columna
+     * @param valor 
+     */
     public static void editarPorUsuario(String tabla, String user, String columna, int valor) {
         if (connection == null) {
             createConnection();
@@ -141,6 +177,11 @@ public class DBhandler {
         }
     }
     
+    /**
+     * borra un elemento de una tabla
+     * @param tabla tabla a modificar
+     * @param idElemento id del renglon a borrar
+     */
     public static void borrarElemento(String tabla, int idElemento) {
         if (connection == null) {
             createConnection();
@@ -154,6 +195,11 @@ public class DBhandler {
         }
     }
     
+    /**
+     * obtiene la lista de materias de un perfil
+     * @param idPerfil
+     * @return 
+     */
     public static List<Materia> getMaterias(int idPerfil) {
         List<Materia> materias = new ArrayList<>();
         if (connection == null) {
@@ -174,19 +220,12 @@ public class DBhandler {
         
         return materias;
     }
-    /*
-    public static void actualizarMateria(Materia materia) {
-        try {
-            Statement statement = connection.createStatement();
-            String query = "update materias set nombre = '" + materia.getNombre() +
-                    "' where id = " + materia.getId();
-            statement.execute(query);
-        } catch (SQLException ex) {
-            Logger.getLogger(DBhandler.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    */
     
+    /**
+     * Agrega una materia a un perfil
+     * @param idPerfil
+     * @return 
+     */
     public static int agregarMateria(int idPerfil) {
         int id = -1;
         try {
@@ -205,6 +244,11 @@ public class DBhandler {
         return id;
     }
     
+    /**
+     * Obtiene las categorias de cierta materia
+     * @param idMateria
+     * @return 
+     */
     public static List<Categoria> getCategorias(int idMateria) {
         List<Categoria> categorias = new ArrayList<>();
         if (connection == null) {
@@ -226,19 +270,11 @@ public class DBhandler {
         return categorias;
     }
     
-    /*
-    public static void actualizarCategoria(Categoria categoria) {
-        try {
-            Statement statement = connection.createStatement();
-            String query = "update categorias set nombre = '" + categoria.getNombre() +
-                    "' where id = " + categoria.getId();
-            statement.execute(query);
-        } catch (SQLException ex) {
-            Logger.getLogger(DBhandler.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    */
-    
+    /**
+     * Agrega una categoria a una materia
+     * @param idMateria
+     * @return 
+     */
     public static int agregarCategoria(int idMateria) {
         int id = -1;
         try {
@@ -257,6 +293,11 @@ public class DBhandler {
         return id;
     }
 
+    /**
+     * Obtiene las preguntas para cierta categoria
+     * @param idCategoria
+     * @return 
+     */
     public static List<Pregunta> getPreguntas(int idCategoria) {
         List<Pregunta> preguntas = new ArrayList<>();
         if (connection == null) {
@@ -280,20 +321,11 @@ public class DBhandler {
         return preguntas;
     }
     
-    /*
-    public static void actualizarPregunta(Pregunta pregunta) {
-        try {
-            Statement statement = connection.createStatement();
-            String query = "update preguntas set pregunta = '" + pregunta.getPregunta() +
-                    "', respuesta = '" + pregunta.getRespuesta() +
-                    "' where id = " + pregunta.getId();
-            statement.execute(query);
-        } catch (SQLException ex) {
-            Logger.getLogger(DBhandler.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    */
-    
+    /**
+     * Agrega una pregunta a una categoria dada
+     * @param idCategoria
+     * @return 
+     */
     public static int agregarPregunta(int idCategoria) {
         int id = -1;
         try {

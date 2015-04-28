@@ -48,5 +48,4 @@
         </table>
         <button type="button" onclick="agregarCategoria(document.getElementById('materia').value)">Agregar categoria</button>
 
-    </body>
-</html>
+<%@ include file="/includes/footer.jsp" %>

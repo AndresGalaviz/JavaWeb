@@ -41,6 +41,7 @@
             <input type="submit" value ="Submit">
             <input type="reset" value="Reset">
         </form>
+        <p>O crea un nuevo usuario <a href="nuevoUsuario.jsp">aquí</a>.</p>
     </center>
     </body>
 </html>

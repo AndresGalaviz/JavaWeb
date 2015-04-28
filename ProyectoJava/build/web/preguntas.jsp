@@ -54,5 +54,5 @@
             </tr>
         </table>
         <button type="button" onclick="agregarPregunta(document.getElementById('categoria').value)">Agregar pregunta</button>
-    </body>
-</html>
+
+<%@ include file="/includes/footer.jsp" %>

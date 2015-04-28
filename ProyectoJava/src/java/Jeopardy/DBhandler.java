@@ -24,7 +24,7 @@ public class DBhandler {
     
     private static void createConnection() {
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            //Class.forName("com.mysql.jdbc.Driver");
             connection = DriverManager.getConnection("jdbc:mysql://localhost/jeopardy", "root", "");
         } catch (Exception e) {
             e.printStackTrace();
@@ -53,6 +53,24 @@ public class DBhandler {
         return id;
     }
     
+    public static String crearUsuario(String usuario, String correo) {
+        String pw = RandomPassword.randomPassword(10);
+        System.out.println(pw);
+        try {          
+            if (connection == null) {
+                createConnection();
+            }
+            Statement statement = connection.createStatement();
+            String query = "insert into perfiles (usuario, password, usuarioNuevo) values ('" + usuario + "', '" + pw + "', 1)";
+            statement.execute(query);
+        } catch (SQLException ex) {
+            Logger.getLogger(DBhandler.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+        MailHandler.sendMail(correo, usuario, pw);
+        return pw;
+    }
+    
     public static int getCuentaBloqueo(String usuario) {
         int cuentaBloqueo = -1;
         try {            
@@ -74,7 +92,8 @@ public class DBhandler {
         
         return cuentaBloqueo;
     }
-        public static boolean getUsuarioNuevo(String usuario) {
+    
+    public static boolean getUsuarioNuevo(String usuario) {
         boolean usuarioNuevo = false;
         try {            
             if (connection == null) {
@@ -95,6 +114,7 @@ public class DBhandler {
         
         return usuarioNuevo;
     }
+    
     public static void editarTabla(String tabla, int idElemento, String columna, String valor) {
         if (connection == null) {
             createConnection();

@@ -62,11 +62,17 @@ public class Controlador extends HttpServlet {
                 if(wrongPassword <= 0) {
                         // TODO: Bloquear usuario
                     DBhandler.editarPorUsuario("perfiles", user, "bloqueado", 1);
-                    mensaje = "Su cuenta ha sido bloqueada";
+                    mensaje = "Su cuenta ha sido bloqueada, contacte al administrador";
                 }
                 request.getSession().setAttribute("message", mensaje);
                 
             }
+        } else if (action.equals("nuevoUsuario")) {
+            String user = request.getParameter("user");
+            String correo = request.getParameter("correo");
+            System.out.println("creando usuario");
+            DBhandler.crearUsuario(user, correo);
+            url = "/login.jsp";
         }
         if(request.getSession().getAttribute("idPerfil") == null) {
             url = "/login.jsp";
@@ -85,7 +91,7 @@ public class Controlador extends HttpServlet {
                 url = "/menu.jsp";
             }
 
-        }else if (action.equals("materias")) {
+        } else if (action.equals("materias")) {
             int idPerfil = (int)request.getSession().getAttribute("idPerfil");
             List<Materia> materias = DBhandler.getMaterias(idPerfil);
             request.setAttribute("materias", materias);
@@ -158,7 +164,7 @@ public class Controlador extends HttpServlet {
             request.setAttribute("materias", materias);
             url = "/configJuego.jsp";
         } else if (action.equals("iniciarJuego")) {
-
+            
         } else if (action.equals("logout")) {
             request.getSession().removeAttribute("usuario");
             request.getSession().removeAttribute("idPerfil");

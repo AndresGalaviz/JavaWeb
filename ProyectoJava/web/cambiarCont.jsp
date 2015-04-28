@@ -27,7 +27,7 @@
             <br><br>       
             Contraseña nueva: <input type="password" name="newPassword" required="true">
             <br><br>
-            Verificar contraseñaÑ <input type="password" name="verifyPassword" required="true">
+            Verificar contraseña: <input type="password" name="verifyPassword" required="true">
             <br><br>
             <input type="submit" value ="Submit">
             <input type="reset" value="Reset">

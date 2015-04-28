@@ -43,6 +43,10 @@ public class Controlador extends HttpServlet {
             Integer wrongPassword = DBhandler.getCuentaBloqueo(user);
             if (id != -1 && wrongPassword > 0) {
                 url = "/menu.jsp";
+                boolean usuarioNuevo = DBhandler.getUsuarioNuevo(user);
+                if(usuarioNuevo) {
+                    url = "/cambiarCont.jsp";
+                }
                 request.getSession().setAttribute("idPerfil", id);
                 request.getSession().setAttribute("usuario", user);
                 request.getSession().removeAttribute("message");
@@ -66,7 +70,22 @@ public class Controlador extends HttpServlet {
         }
         if(request.getSession().getAttribute("idPerfil") == null) {
             url = "/login.jsp";
-        } else if (action.equals("materias")) {
+        } else if (action.equals("update")) {
+            String user = (String)request.getSession().getAttribute("usuario");
+            String oldPassword = (String)request.getParameter("oldPassword");
+            String newPassword = (String)request.getParameter("newPassword");
+            String verifyPassword = (String)request.getParameter("verifyPassword");
+            int id = DBhandler.validarUsuario(user, oldPassword);
+            if(!newPassword.equals(verifyPassword) || id == -1) {
+                url = "/menu.jsp";
+                request.getSession().setAttribute("message", "Error en contraseñas");
+            } else if (id != -1) {
+                DBhandler.editarTabla("perfiles", id, "password", newPassword);
+                DBhandler.editarPorUsuario("perfiles", user, "usuarioNuevo", 0);
+                url = "/menu.jsp";
+            }
+
+        }else if (action.equals("materias")) {
             int idPerfil = (int)request.getSession().getAttribute("idPerfil");
             List<Materia> materias = DBhandler.getMaterias(idPerfil);
             request.setAttribute("materias", materias);

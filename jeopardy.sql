@@ -1,4 +1,4 @@
-/*
+﻿/*
 MySQL Data Transfer
 Source Host: localhost
 Source Database: jeopardy
@@ -54,7 +54,7 @@ CREATE TABLE `perfiles` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `usuario` varchar(20) DEFAULT NULL,
   `password` varchar(20) DEFAULT NULL,
-  `bloqueado` bit(1) DEFAULT NULL,
+  `usuarioNuevo` bit(1) DEFAULT TRUE,
   `cuentaBloqueo` int(11) DEFAULT '3',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
@@ -99,7 +99,7 @@ INSERT INTO `materias` VALUES ('2', 'Matematicas', '1');
 INSERT INTO `materias` VALUES ('4', 'Español', '1');
 INSERT INTO `materias` VALUES ('5', 'Ciencias', '1');
 INSERT INTO `materias` VALUES ('11', 'Programacion', '1');
-INSERT INTO `perfiles` VALUES ('1', 'admin', 'admin', '', '3');
+INSERT INTO `perfiles` VALUES ('1', 'admin', 'admin', 1, '3');
 INSERT INTO `preguntas` VALUES ('1', 'Pregunta 1', 'Respuesta 1', '100', '1');
 INSERT INTO `preguntas` VALUES ('2', 'Pregunta 2', 'Respuesta 2', '200', '1');
 INSERT INTO `preguntas` VALUES ('4', 'Pregunta 3', 'Respuesta 3', '300', '1');

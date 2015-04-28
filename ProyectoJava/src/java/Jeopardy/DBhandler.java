@@ -53,7 +53,7 @@ public class DBhandler {
         return id;
     }
     
-        public static int getCuentaBloqueo(String usuario) {
+    public static int getCuentaBloqueo(String usuario) {
         int cuentaBloqueo = -1;
         try {            
             if (connection == null) {
@@ -74,7 +74,27 @@ public class DBhandler {
         
         return cuentaBloqueo;
     }
-    
+        public static boolean getUsuarioNuevo(String usuario) {
+        boolean usuarioNuevo = false;
+        try {            
+            if (connection == null) {
+                createConnection();
+            }
+            
+            Statement statement = connection.createStatement();
+            String query = "select usuarioNuevo from perfiles where usuario = '" 
+                    + usuario + "'";
+            ResultSet results = statement.executeQuery(query);
+            if (results.next()) {
+                usuarioNuevo = results.getBoolean("usuarioNuevo");
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(DBhandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return usuarioNuevo;
+    }
     public static void editarTabla(String tabla, int idElemento, String columna, String valor) {
         if (connection == null) {
             createConnection();

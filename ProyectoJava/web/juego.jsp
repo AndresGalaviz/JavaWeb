@@ -4,7 +4,15 @@
     Author     : MarthaElena
 --%>
 
+<%@page import="Jeopardy.Categoria"%>
+<%@page import="Jeopardy.Pregunta"%>
+<%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%
+    List<Pregunta> preguntas = (List<Pregunta>) request.getAttribute("preguntas");
+    List<Categoria> categorias = (List<Categoria>)request.getAttribute("categorias");
+    String materia = request.getParameter("materia");
+%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -28,123 +36,60 @@
     <center>
         <div id="tablero">
             <h1>Play</h1>
-
+                
             <table border="5" width="500" height = "500">
                 <div id="jugadores">
+                    
+                    Jugador uno:<input type="text" name ="jugadorUno" id ="jugadorUno" required/>
+                    Jugador dos:<input type="text" name ="jugadorDos" id ="jugadorDos" required/>
+                    
+                    
+                    
+                    <hr>
                     <select id="seleccionarUsuario">
-                        <option>Andres</option>
-                        <option>Alberto</option>
+                        <option>Jugador1</option>
+                        <option>Jugador2</option>
                     </select>
                     
-                    <div id="puntos"></div>
+                    Puntaje: <div id="puntos"></div>
                 </div>
                 <button onclick="agregarPuntos()">Agregar Puntos</button>
+                <button onclick="resetPuntos()">No asignar Puntos</button>
                 <br><br>
                 <tr>
-                    <td onclick="seleccionar(this)" id="q11" value="100" >
-                        100<div id="pregunta" hidden='TRUE'>Pregunta</div>
-                        <div id="respuesta" hidden='TRUE'>Respuesta</div>
-                    </td>
-                    <td onclick="seleccionar(this)" id="q21" value ="100">
-                        100<div id="pregunta" hidden='TRUE'>Pregunta</div>
-                        <div id="respuesta" hidden='TRUE'>Respuesta</div></td>
-                    <td onclick="seleccionar(this)" id="q31" value ="100">
-                        100<div id="pregunta" hidden='TRUE'>Pregunta</div>
-                        <div id="respuesta" hidden='TRUE'>Respuesta</div></td>
-                    <td onclick="seleccionar(this)" id="q41" value ="100">
-                        100<div id="pregunta" hidden='TRUE'>Pregunta</div>
-                        <div id="respuesta" hidden='TRUE'>Respuesta</div></td>
-                    <td onclick="seleccionar(this)" id="q51" value ="100">
-                        100<div id="pregunta" hidden='TRUE'>Pregunta</div>
-                        <div id="respuesta" hidden='TRUE'>Respuesta</div></td>
+                    <% for(Categoria cat : categorias) { %>
+                    <th><%=cat.getNombre()%></th>
+                    <%}%>
                 </tr>
+                <% for(int i = 0; i < preguntas.size(); i++) { %>
                 <tr>
-                    <td onclick="seleccionar(this)" id="q12" value="200" >
-                        200<div id="pregunta" hidden='TRUE'>Pregunta</div>
-                        <div id="respuesta" hidden='TRUE'>Respuesta</div>
+                    <td onclick="seleccionar(this)" id="q<%= i%5 %><%= i/5 %>">
+                        <%= preguntas.get(i).getPuntos()%><div id="pregunta" hidden='TRUE'><%= preguntas.get(i).getPregunta()%></div>
+                        <div id="respuesta" hidden='TRUE'><%= preguntas.get(i).getRespuesta()%></div>
                     </td>
-                    <td onclick="seleccionar(this)" id="q22" value="200" >
-                        100<div id="pregunta" hidden='TRUE'>Pregunta</div>
-                        <div id="respuesta" hidden='TRUE'>Respuesta</div>
+                    <%i++;%>
+                    <td onclick="seleccionar(this)" id="q<%= i%5 %><%= i/5 %>">
+                        <%= preguntas.get(i).getPuntos()%><div id="pregunta" hidden='TRUE'><%= preguntas.get(i).getPregunta()%></div>
+                        <div id="respuesta" hidden='TRUE'><%= preguntas.get(i).getRespuesta()%></div>
                     </td>
-                    <td onclick="seleccionar(this)" id="q32" value="200" >
-                        200<div id="pregunta" hidden='TRUE'>Pregunta</div>
-                        <div id="respuesta" hidden='TRUE'>Respuesta</div>
+                    <%i++;%>
+                    <td onclick="seleccionar(this)" id="q<%= i%5 %><%= i/5 %>">
+                        <%= preguntas.get(i).getPuntos()%><div id="pregunta" hidden='TRUE'><%= preguntas.get(i).getPregunta()%></div>
+                        <div id="respuesta" hidden='TRUE'><%= preguntas.get(i).getRespuesta()%></div>
                     </td>
-                    <td onclick="seleccionar(this)" id="q42" value="200" >
-                        200<div id="pregunta" hidden='TRUE'>Pregunta</div>
-                        <div id="respuesta" hidden='TRUE'>Respuesta</div>
+                    <%i++;%>
+                    <td onclick="seleccionar(this)" id="q<%= i%5 %><%= i/5 %>">
+                        <%= preguntas.get(i).getPuntos()%><div id="pregunta" hidden='TRUE'><%= preguntas.get(i).getPregunta()%></div>
+                        <div id="respuesta" hidden='TRUE'><%= preguntas.get(i).getRespuesta()%></div>
                     </td>
-                    <td onclick="seleccionar(this)" id="q52" value="200" >
-                        200<div id="pregunta" hidden='TRUE'>Pregunta</div>
-                        <div id="respuesta" hidden='TRUE'>Respuesta</div>
+                    <%i++;%>
+                    <td onclick="seleccionar(this)" id="q<%= i%5 %><%= i/5 %>">
+                        <%= preguntas.get(i).getPuntos()%><div id="pregunta" hidden='TRUE'><%= preguntas.get(i).getPregunta()%></div>
+                        <div id="respuesta" hidden='TRUE'><%= preguntas.get(i).getRespuesta()%></div>
                     </td>
+                   
                 </tr>
-                <tr>
-                    <td onclick="seleccionar(this)" id="q13" value="300" >
-                        300<div id="pregunta" hidden='TRUE'>Pregunta</div>
-                        <div id="respuesta" hidden='TRUE'>Respuesta</div>
-                    </td>
-                    <td onclick="seleccionar(this)" id="q23" value="300" >
-                        300<div id="pregunta" hidden='TRUE'>Pregunta</div>
-                        <div id="respuesta" hidden='TRUE'>Respuesta</div>
-                    </td>
-                    <td onclick="seleccionar(this)" id="q33" value="300" >
-                        300<div id="pregunta" hidden='TRUE'>Pregunta</div>
-                        <div id="respuesta" hidden='TRUE'>Respuesta</div>
-                    </td>
-                    <td onclick="seleccionar(this)" id="q43" value="300" >
-                        300<div id="pregunta" hidden='TRUE'>Pregunta</div>
-                        <div id="respuesta" hidden='TRUE'>Respuesta</div>
-                    </td>
-                    <td onclick="seleccionar(this)" id="q53" value="300" >
-                        300<div id="pregunta" hidden='TRUE'>Pregunta</div>
-                        <div id="respuesta" hidden='TRUE'>Respuesta</div>
-                    </td>
-                </tr>
-                <tr>
-                    <td onclick="seleccionar(this)" id="q14"value="400" >
-                        400<div id="pregunta" hidden='TRUE'>Pregunta</div>
-                        <div id="respuesta" hidden='TRUE'>Respuesta</div>
-                    </td>
-                    <td onclick="seleccionar(this)" id="q24"value="400" >
-                        400<div id="pregunta" hidden='TRUE'>Pregunta</div>
-                        <div id="respuesta" hidden='TRUE'>Respuesta</div>
-                    </td>
-                    <td onclick="seleccionar(this)" id="q34"value="400" >
-                        400<div id="pregunta" hidden='TRUE'>Pregunta</div>
-                        <div id="respuesta" hidden='TRUE'>Respuesta</div>
-                    </td>
-                    <td onclick="seleccionar(this)" id="q44"value="400" >
-                        400<div id="pregunta" hidden='TRUE'>Pregunta</div>
-                        <div id="respuesta" hidden='TRUE'>Respuesta</div>
-                    </td>
-                    <td onclick="seleccionar(this)" id="q54"value="400" >
-                        400<div id="pregunta" hidden='TRUE'>Pregunta</div>
-                        <div id="respuesta" hidden='TRUE'>Respuesta</div>
-                    </td>
-                </tr>
-                <tr>
-                    <td onclick="seleccionar(this)" id="q15" value="500" >
-                        500<div id="pregunta" hidden='TRUE'>Pregunta</div>
-                        <div id="respuesta" hidden='TRUE'>Respuesta</div>
-                    </td>
-                    <td onclick="seleccionar(this)" id="q25" value="500" >
-                        500<div id="pregunta" hidden='TRUE'>Pregunta</div>
-                        <div id="respuesta" hidden='TRUE'>Respuesta</div>
-                    </td>
-                    <td onclick="seleccionar(this)" id="q35"value="500" >
-                        500<div id="pregunta" hidden='TRUE'>Pregunta</div>
-                        <div id="respuesta" hidden='TRUE'>Respuesta</div>
-                    </td>
-                    <td onclick="seleccionar(this)" id="q45" value="500" >
-                        500<div id="pregunta" hidden='TRUE'>Pregunta</div>
-                        <div id="respuesta" hidden='TRUE'>Respuesta</div>
-                    </td>
-                    <td onclick="seleccionar(this)" id="q55" value="500" >
-                        500<div id="pregunta" hidden='TRUE'>Pregunta</div>
-                        <div id="respuesta" hidden='TRUE'>Respuesta</div>
-                    </td>
+                <%}%>
                 </tr>        
             </table>
         </div>
@@ -154,4 +99,5 @@
         </div>
     </center>
 </body>
+<%@ include file="/includes/footer.jsp" %>
 </html>

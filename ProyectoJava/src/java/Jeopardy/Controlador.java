@@ -8,6 +8,7 @@ package Jeopardy;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Collections;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -164,8 +165,22 @@ public class Controlador extends HttpServlet {
             request.setAttribute("materias", materias);
             url = "/configJuego.jsp";
         } else if (action.equals("iniciarJuego")) {
-            
-        } else if (action.equals("logout")) {
+            url = "/juego.jsp";
+            String idPreguntas[] = request.getParameterValues("idPreguntas");
+            String idCategorias[] = request.getParameterValues("categorias");
+            List<Pregunta> preguntas = DBhandler.getPreguntas(idPreguntas);
+            List<Categoria> categorias = DBhandler.getCategorias(idCategorias);
+            Collections.sort(preguntas);
+            Collections.sort(categorias);
+            request.removeAttribute("idPreguntas");
+            request.removeAttribute("categorias");
+            request.setAttribute("preguntas", preguntas);
+            request.setAttribute("categorias", categorias);
+            url = "/juego.jsp";
+        } else if (action.equals("guardarJuego")) {
+  
+            url = "/login.jsp";
+        }else if (action.equals("logout")) {
             request.getSession().removeAttribute("usuario");
             request.getSession().removeAttribute("idPerfil");
             url = "/login.jsp";

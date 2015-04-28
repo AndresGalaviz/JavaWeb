@@ -9,7 +9,7 @@ package Jeopardy;
  *
  * @author Alberto
  */
-public class Categoria {
+public class Categoria implements Comparable{
     private int id;
     private String nombre;
     Categoria() {
@@ -31,5 +31,16 @@ public class Categoria {
     }
     public String getNombre() {
         return nombre;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        Categoria c = (Categoria)o;
+        if ( id > c.id) {
+            return 1;
+        } else if ( id <  c.id ) {
+            return -1;
+        }
+        return 0;
     }
 }

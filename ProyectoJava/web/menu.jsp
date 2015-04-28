@@ -4,7 +4,12 @@
     Author     : Alberto
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%><%
+if (session.getAttribute("usuario") == null) {%>
+        <jsp:forward page="login.jsp" />
+    <%}
+%>
+
 <!DOCTYPE html>
 <html>
     <head>

@@ -24,7 +24,7 @@ public class DBhandler {
     
     private static void createConnection() {
         try {
-            //Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.jdbc.Driver");
             connection = DriverManager.getConnection("jdbc:mysql://localhost/jeopardy", "root", "");
         } catch (Exception e) {
             e.printStackTrace();
@@ -292,7 +292,68 @@ public class DBhandler {
         }
         return id;
     }
-
+        /**
+     * Obtiene las categorias para cierto id
+     * @param idCategoria
+     * @param idPregunta
+     * @return 
+     */
+    public static List<Categoria> getCategorias(String[] idCategoria) {
+        List<Categoria> categorias = new ArrayList<>();
+        if (connection == null) {
+            createConnection();
+        }
+        try {
+            Statement statement = connection.createStatement();
+            for(String s : idCategoria) {
+           
+            
+            String query = "select * from categorias where id = " + s;
+            ResultSet results = statement.executeQuery(query);
+            while (results.next()) {
+                int id = results.getInt("id");
+                String nombre = results.getString("nombre");
+                categorias.add(new Categoria(id, nombre));
+            }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBhandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return categorias;
+    }
+    /**
+     * Obtiene las preguntas para cierta categoria y id
+     * @param idCategoria
+     * @param idPregunta
+     * @return 
+     */
+    public static List<Pregunta> getPreguntas(String[] idPregunta) {
+        List<Pregunta> preguntas = new ArrayList<>();
+        if (connection == null) {
+            createConnection();
+        }
+        try {
+            Statement statement = connection.createStatement();
+            for(String s : idPregunta) {
+           
+                String query = "select * from preguntas where id = "+s;
+                ResultSet results = statement.executeQuery(query);
+                while (results.next()) {
+                    int id = results.getInt("id");
+                    String pregunta = results.getString("pregunta");
+                    String respuesta = results.getString("respuesta");
+                    int puntos = results.getInt("puntos");
+                    int idCategoria = results.getInt("idCategoria");
+                    preguntas.add(new Pregunta(id, pregunta, respuesta, puntos, idCategoria));
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBhandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return preguntas;
+    }
     /**
      * Obtiene las preguntas para cierta categoria
      * @param idCategoria
@@ -312,7 +373,7 @@ public class DBhandler {
                 String pregunta = results.getString("pregunta");
                 String respuesta = results.getString("respuesta");
                 int puntos = results.getInt("puntos");
-                preguntas.add(new Pregunta(id, pregunta, respuesta, puntos));
+                preguntas.add(new Pregunta(id, pregunta, respuesta, puntos, idCategoria));
             }
         } catch (SQLException ex) {
             Logger.getLogger(DBhandler.class.getName()).log(Level.SEVERE, null, ex);

@@ -49,6 +49,4 @@
         
         <button type="button" onclick="agregarMateria()">Agregar materia</button>
         
-
-    </body>
-</html>
+<%@ include file="/includes/footer.jsp" %>

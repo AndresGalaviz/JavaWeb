@@ -37,5 +37,5 @@
         <div id="seleccionCategorias"></div><hr>
         <div id="seleccionPreguntas"></div>
         </form>
-    </body>
-</html>
+
+<%@ include file="/includes/footer.jsp" %>
